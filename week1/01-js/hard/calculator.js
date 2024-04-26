@@ -51,7 +51,6 @@ class Calculator {
   calculate(equtn){
     this.result=eval(equtn)
     if(!isFinite(this.result)){
-      console.log("value: "+this.result)
       throw new Error("not evaluated correctly !");
     }
   }
