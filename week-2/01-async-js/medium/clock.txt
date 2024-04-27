@@ -1,0 +1,2 @@
+24 Hour Format: 10:35:29
+12 Hour Format: 10:35:29 AM
