@@ -1,5 +1,16 @@
 const jwt = require('jsonwebtoken');
 const jwtPassword = 'secret';
+const passwordlen=6
+
+
+
+function isValidEmail(email) {
+    // Regular expression pattern for basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+ 
 
 
 /**
@@ -16,6 +27,15 @@ const jwtPassword = 'secret';
  */
 function signJwt(username, password) {
     // Your code here
+   const payload={
+        "username":username,
+        "password":password
+    }
+     
+    if(!isValidEmail(username) | password.length<passwordlen){
+        return(null)
+    }
+    return jwt.sign(payload,jwtPassword)
 }
 
 /**
@@ -26,8 +46,17 @@ function signJwt(username, password) {
  *                    Returns false if the token is invalid, expired, or not verified
  *                    using the secret key.
  */
+
+
 function verifyJwt(token) {
     // Your code here
+    //return(false)
+    try {
+        jwt.verify(token, jwtPassword);
+        return true; // Return true if verification succeeds
+    } catch (err) {
+        return false; // Return false if verification fails
+    }
 }
 
 /**
@@ -39,6 +68,17 @@ function verifyJwt(token) {
  */
 function decodeJwt(token) {
     // Your code here
+    try {
+        const decoded = jwt.decode(token);
+        console.log(decoded)
+        if(decoded == null){
+            return(false)
+        }
+        return true // Return the decoded payload
+    } catch (error) {
+        console.error('Error decoding JWT:', error);
+        return false; // Return null if decoding fails
+    }
 }
 
 
